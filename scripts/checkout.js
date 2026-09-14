@@ -2,14 +2,12 @@ import {cart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import { removeFromCart } from '../data/cart.js';
+import { calculateCartQuantity } from '../data/cart.js';
 
 
 function UpdateCartQuantity(){
 
-  let totalQuantity = 0;
-  cart.forEach((cartItem) => {
-    totalQuantity += cartItem.quantity;
-  });
+  const totalQuantity = calculateCartQuantity();
 
   document.querySelector('.js-return-to-home-link').innerHTML = `${totalQuantity} items`;
 }
