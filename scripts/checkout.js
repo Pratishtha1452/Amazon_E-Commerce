@@ -3,6 +3,17 @@ import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import { removeFromCart } from '../data/cart.js';
 
+let totalQuantity = 0;
+function UpdateAndcalCartQuantity(){
+  
+  cart.forEach((cartItem) => {
+    totalQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-return-to-home-link').innerHTML = `${totalQuantity} items`;
+}
+UpdateAndcalCartQuantity();
+
 let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
@@ -95,6 +106,8 @@ cart.forEach((cartItem) => {
       </div>
     </div>`;
 });
+
+
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
 
