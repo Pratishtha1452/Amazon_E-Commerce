@@ -5,7 +5,7 @@
   import { calculateCartQuantity } from '../../data/cart.js';
   import { UpdateQuantity } from '../../data/cart.js';
   import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
-  import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+  import {deliveryOptions, getDeliveryOption, calculateDeliveryDate} from '../../data/deliveryOptions.js';
   import { renderPaymentSummary } from './paymentSummary.js';
   import { renderCheckoutHeader } from './checkoutHeader.js';
 
@@ -23,10 +23,7 @@
 
       const deliveryOptionId = cartItem.deliveryOptionId;
       const deliveryOption = getDeliveryOption(deliveryOptionId);
-
-      const today = dayjs();
-      const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-      const dateString = deliveryDate.format('dddd, MMMM D');
+      const dateString = calculateDeliveryDate(deliveryOption);
 
       cartSummaryHTML += `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
           <div class="delivery-date">
@@ -74,9 +71,7 @@
       let html = '';
 
       deliveryOptions.forEach((option) => {
-        const today = dayjs();
-        const deliveryDate = today.add(option.deliveryDays, 'days');
-        const dateString = deliveryDate.format('dddd, MMMM D');
+        const dateString = calculateDeliveryDate(option);
         const priceString = option.priceCents === 0 ? 'FREE' : `$${formatCurrency(option.priceCents)}`;
 
         const isChecked = option.id === cartItem.deliveryOptionId;
@@ -143,9 +138,6 @@
         UpdateQuantity(productId, newQuantity);
 
         container.classList.remove('is-editing-quantity');
-
-        
-        document.querySelector(`.js-quantity-label-${productId}`).innerHTML = newQuantity;
         renderOrderSummary();
         renderPaymentSummary();
         renderCheckoutHeader();
