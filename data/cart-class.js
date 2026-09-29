@@ -26,7 +26,7 @@ class Cart{
     }
   }
   saveToStorage(){
-    localStorage.setItem('this.#localStorageKey', JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
   addToCart(productId, buyQuantity = 1){
     //if already exists in cart -> find it in the cart and increase the quantity
@@ -42,7 +42,7 @@ class Cart{
 
     //else if not in cart push it into the cart object
     else{
-      this.cartItemst.push({
+      this.cartItems.push({
         productId,
         quantity: buyQuantity,
         deliveryOptionId: '1'
@@ -53,7 +53,7 @@ class Cart{
 
   removeFromCart(productId){
     const newCart = [];
-    this.cartItemsrt.forEach((cartItem) => {
+    this.cartItems.forEach((cartItem) => {
       if(cartItem.productId !== productId){
         newCart.push(cartItem)
       }
@@ -100,7 +100,7 @@ class Cart{
   }
 }
 
-const cart = new Cart('cart-oop');
+export const cart = new Cart('cart-oop');
 const businessCart = new Cart('business-cart');
 
 
