@@ -1,8 +1,14 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import {cart} from "../../data/cart-class.js";
+import {loadProducts} from "../../data/products.js";
 
 
 describe('test suite: renderOrderSummary', () => {
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
   beforeEach(() => {
     spyOn(localStorage, 'setItem');
     document.querySelector('.js-test-container').innerHTML = `
