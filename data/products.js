@@ -80,6 +80,8 @@ export function loadProductsFetch() {
         return new Product(productDetails);
       });
       console.log('loadproducts');
+    }).catch(() => { 
+      console.log('Error loading products');
     });
 
   return promise;
