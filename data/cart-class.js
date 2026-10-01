@@ -98,11 +98,20 @@ class Cart{
     matchingItem.deliveryOptionId = deliveryOptionId;
       this.saveToStorage();
   }
+
+  loadCart(func){
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener('load', () => {
+      console.log(xhr.response);
+      func();
+    });
+
+    xhr.open('GET','https://supersimplebackend.dev/cart');
+    xhr.send();
+  }
 }
 
 export const cart = new Cart('cart-oop');
 const businessCart = new Cart('business-cart');
 
-
-console.log(cart);
-console.log(businessCart);
