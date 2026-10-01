@@ -7,23 +7,40 @@ import {cart} from '../data/cart-class.js';
 //import '../data/car.js';
 //import '../data/backend-practice.js'
 
-new Promise((resolve) => {
-  loadProducts(() => {
-    resolve();
-  });
-
-}).then(() => {
+Promise.all([
+  new Promise((resolve) => {
+    loadProducts(() => {
+      resolve();
+    });
+  }),
   new Promise((resolve) => {
     cart.loadCart(() => {
       resolve();
     });
-  });
-  
-}).then(() => {
+  })
+]).then(() => {
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
 });
+
+// new Promise((resolve) => {
+//   loadProducts(() => {
+//     resolve();
+//   });
+
+// }).then(() => {
+//   new Promise((resolve) => {
+//     cart.loadCart(() => {
+//       resolve();
+//     });
+//   });
+
+// }).then(() => {
+//   renderCheckoutHeader();
+//   renderOrderSummary();
+//   renderPaymentSummary();
+// });
 // loadProducts(() => {
 //   renderCheckoutHeader();
 //   renderOrderSummary();
