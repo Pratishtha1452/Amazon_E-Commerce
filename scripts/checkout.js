@@ -9,14 +9,15 @@ import {cart} from '../data/cart-class.js';
 
 async function loadPage(){
   console.log('loadPage');
-  await loadProductsFetch();
-
-  await new Promise((resolve) => {
-    cart.loadCart(() => {
-      resolve();
-    });
-  });
-
+  try{
+    await Promise.all([
+      loadProductsFetch(),
+      cart.loadCart()
+    ]);
+  }
+  catch(error){
+    console.error('Error loading page:', error);
+  }
   renderCheckoutHeader();
   renderOrderSummary();
   renderPaymentSummary();
