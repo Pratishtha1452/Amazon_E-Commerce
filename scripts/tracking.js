@@ -68,3 +68,8 @@ async function loadTrackingPage() {
   document.querySelector('.js-order-tracking').innerHTML = trackingHtml;
 }
 loadTrackingPage();
+
+document.querySelector('.js-search-button').addEventListener('click', () => {
+  const search = document.querySelector('.js-search-bar').value;
+  window.location.href = `amazon.html?search=${search}`;
+});
