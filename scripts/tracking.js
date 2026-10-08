@@ -19,6 +19,14 @@ async function loadTrackingPage() {
   });
 
   const deliveryDateString = dayjs(productDetails.estimatedDeliveryTime).format('dddd, MMMM D, YYYY');
+  const currentTime = dayjs();
+  const orderTime = dayjs(order.orderTime);
+  const deliveryTime = dayjs(productDetails.estimatedDeliveryTime);
+  const deliveryProgress = ((currentTime - orderTime) / (deliveryTime - orderTime)) * 100;
+
+  const isPreparing = deliveryProgress < 50;
+  const isShipped = deliveryProgress >= 50 && deliveryProgress < 100;
+  const isDelivered = deliveryProgress >= 100;
 
   let trackingHtml =``;
   trackingHtml = `
@@ -41,19 +49,19 @@ async function loadTrackingPage() {
     <img class="product-image" src="${product.image}">
 
     <div class="progress-labels-container">
-      <div class="progress-label">
+      <div class="progress-label ${isPreparing ? 'current-status' : ''}">
         Preparing
       </div>
-      <div class="progress-label current-status">
+      <div class="progress-label ${isShipped ? 'current-status' : ''}">
         Shipped
       </div>
-      <div class="progress-label">
+      <div class="progress-label ${isDelivered ? 'current-status' : ''}">
         Delivered
       </div>
     </div>
 
     <div class="progress-bar-container">
-      <div class="progress-bar"></div>
+      <div class="progress-bar" style="width: ${deliveryProgress}%"></div>
     </div>
   `;
 
