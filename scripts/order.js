@@ -4,6 +4,7 @@ import { formatCurrency } from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {cart} from '../data/cart-class.js';
 
+
 async function loadOrders() {
   await loadProductsFetch();
 
@@ -84,7 +85,8 @@ function renderOrders(order) {
       </div>
 
       <div class="product-actions">
-        <a href="tracking.html">
+        <!-- Inside scripts/orders.js -->
+        <a href="tracking.html?orderId=${order.id}&productId=${product.id}">
           <button class="track-package-button button-secondary">
             Track package
           </button>
